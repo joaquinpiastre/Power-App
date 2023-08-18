@@ -1,4 +1,4 @@
-PROYECTO: Plataforma de reservas para clases de Fitness
+PROYECTO "POWER APP": Plataforma de reservas para clases de fitness
 
 INTEGRANTES:
 - Santiago Páez
