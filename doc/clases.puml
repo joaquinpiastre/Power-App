@@ -1,0 +1,44 @@
+class Usuario {
+  - nombre
+  - correoElectronico
+  - contraseña
+  + iniciarSesion()
+  + registrarse()
+}
+
+class Tipo_de_entrenamientos {
+    - Pesas
+    - Funcional
+    - Pilates
+    - Crossfit
+}
+
+class ClaseFitness {
+  - nombre
+  - instructor
+  - horario
+  - capacidadMaxima
+  + obtenerDisponibilidad()
+  + reservar()
+}
+
+class Gimnasio {
+  - nombre
+  - ubicacion
+  - clasesOfrecidas
+  + agregarClase()
+  + gestionarHorarios()
+}
+
+class Reserva {
+  - usuario: Usuario
+  - clase: ClaseFitness
+  - fecha
+  - Horario
+  + confirmarReserva()
+}
+
+Usuario "1" -- "n" Reserva : realiza
+ClaseFitness "1" -- "n" Reserva : tiene
+Gimnasio "1..*" -- "n" Tipo_de_entrenamientos : ofrece
+Tipo_de_entrenamientos "1..*" -- "n" ClaseFitness : tipos
