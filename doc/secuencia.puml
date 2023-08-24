@@ -1,47 +1,51 @@
-@startuml Diagrama de secuencia PowerAPP
+@startuml PowerAPP Sequence diagram
 
-actor Usuario
-participant "Página Web" as PaginaWeb
-participant "Sistema" as Sistema
-participant "ClaseFitness" as Clase
-participant "Gimnasio" as Gimnasio
-participant "Reserva" as Reserva
-participant "TipoEntrenamiento" as TipoEntrenamiento
+actor User
+participant "Web Page" as WebPage
+participant "System" as System
+participant "Fitness Class" as Class
+participant "Gym" as Gym
+participant "Reservation" as Reservation
+participant "Training Type" as TrainingType
 
-Usuario -> PaginaWeb: Accede a la página
-Usuario -> PaginaWeb: Inicia sesión
+User -> WebPage: Accede a la página
+User -> WebPage: Inicia sesión
 
-activate PaginaWeb
-PaginaWeb -> Sistema: Solicita ver tipos de entrenamiento
+activate WebPage
+WebPage -> System: Solicita ver tipos de entrenamiento
 
-activate Sistema
-Sistema -> TipoEntrenamiento: Consulta tipos de entrenamiento
-activate TipoEntrenamiento
-TipoEntrenamiento -> Sistema: Devuelve tipos de entrenamiento
-deactivate TipoEntrenamiento
-Sistema -> PaginaWeb: Muestra tipos de entrenamiento
-deactivate Sistema
-PaginaWeb -> Usuario: Muestra tipos de entrenamiento
+activate System
+System -> TrainingType: Consulta tipos de entrenamiento
+activate TrainingType
+TrainingType -> System: Devuelve tipos de entrenamiento
+deactivate TrainingType
+System -> WebPage: Muestra tipos de entrenamiento
+deactivate System
+WebPage -> User: Muestra tipos de entrenamiento
 
-Usuario -> PaginaWeb: Selecciona tipo de entrenamiento
-Usuario -> PaginaWeb: Selecciona clase y horario
-Usuario -> PaginaWeb: Confirma reserva
+User -> WebPage: Selecciona tipo de entrenamiento
+User -> WebPage: Selecciona clase y horario
+User -> WebPage: Confirma reserva
 
-activate PaginaWeb
-PaginaWeb -> Sistema: Solicita reserva de clase
-activate Sistema
-Sistema -> Clase: Verifica disponibilidad
-activate Clase
-Clase -> Sistema: Clase disponible
-deactivate Clase
-Sistema -> Reserva: Crea reserva
-activate Reserva
-Reserva -> Sistema: Confirmación de reserva
-deactivate Reserva
-Sistema -> PaginaWeb: Reserva confirmada
-deactivate Sistema
-PaginaWeb -> Usuario: Muestra confirmación de reserva
+activate WebPage
+WebPage -> System: Solicita reserva de clase
+activate System
+System -> Gym: Consulta horarios
+activate Gym
+Gym -> System: Devuelve horarios
+deactivate Gym
+System -> Class: Verifica disponibilidad
+activate Class
+Class -> System: Clase disponible
+deactivate Class
+System -> Reservation: Crea reserva
+activate Reservation
+Reservation -> System: Confirmación de reserva
+deactivate Reservation
+System -> WebPage: Reserva confirmada
+deactivate System
+WebPage -> User: Muestra confirmación de reserva
 
-deactivate PaginaWeb
+deactivate WebPage
 
 @enduml

@@ -1,46 +1,46 @@
-@startuml Diagrama de clases PowerAPP
-
-class Usuario {
-  - nombre
-  - correoElectronico
-  - contraseña
-  + iniciarSesion()
-  + registrarse()
+@startuml PowerAPP Class Diagram
+class User {
+  - id
+  - name
+  - email
+  - password
+  + login()
+  + register()
 }
 
-class TipoEntrenamiento {
-  - nombre
-  + obtenerNombre()
+class TrainingType {
+  - name
+  + getName()
 }
 
-class ClaseFitness {
-  - nombre
+class FitnessClass {
+  - name
   - instructor
-  - horario
-  - capacidadMaxima
-  + obtenerDisponibilidad()
-  + reservar()
+  - schedule
+  - maxCapacity
+  + getDisponibility()
+  + reserve()
 }
 
-class Gimnasio {
-  - nombre
-  - ubicacion
-  - clasesOfrecidas
-  + agregarClase()
-  + gestionarHorarios()
+class Gym {
+  - name
+  - location
+  - offeredClasses
+  + addClass()
+  + manageSchedule()
 }
 
-class Reserva {
-  - usuario: Usuario
-  - clase: ClaseFitness
-  - fecha
-  - Horario
-  + confirmarReserva()
+class Reserve {
+  - user: User
+  - class: FitnessClass
+  - date
+  - schedule
+  + confirmReserv()
 }
 
-TipoEntrenamiento "1" -- "n" ClaseFitness : se relaciona con
-Usuario "1" -- "n" Reserva : realiza
-ClaseFitness "1" -- "n" Reserva : tiene
-Gimnasio "1" -- "n" ClaseFitness : ofrece
+TrainingType "1" -- "n" FitnessClass : relates with
+User "1" -- "n" Reserve : realizes
+FitnessClass "1" -- "n" Reserve : has
+Gym "1" -- "n" FitnessClass : offers
 
 @enduml
