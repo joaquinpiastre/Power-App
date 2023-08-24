@@ -1,0 +1,45 @@
+@startuml Diagrama de secuencia PowerAPP
+
+actor Usuario
+participant "Página Web" as PaginaWeb
+participant "Sistema" as Sistema
+participant "ClaseFitness" as Clase
+participant "Gimnasio" as Gimnasio
+participant "Reserva" as Reserva
+
+Usuario -> PaginaWeb: Accede a la página
+Usuario -> PaginaWeb: Inicia sesión
+
+activate PaginaWeb
+PaginaWeb -> Sistema: Solicita ver horarios
+
+activate Sistema
+Sistema -> Gimnasio: Consulta horarios
+activate Gimnasio
+Gimnasio -> Sistema: Devuelve horarios
+deactivate Gimnasio
+Sistema -> PaginaWeb: Muestra horarios
+deactivate Sistema
+PaginaWeb -> Usuario: Muestra horarios
+
+Usuario -> PaginaWeb: Selecciona clase y horario
+Usuario -> PaginaWeb: Confirma reserva
+
+activate PaginaWeb
+PaginaWeb -> Sistema: Solicita reserva de clase
+activate Sistema
+Sistema -> Clase: Verifica disponibilidad
+activate Clase
+Clase -> Sistema: Clase disponible
+deactivate Clase
+Sistema -> Reserva: Crea reserva
+activate Reserva
+Reserva -> Sistema: Confirmación de reserva
+deactivate Reserva
+Sistema -> PaginaWeb: Reserva confirmada
+deactivate Sistema
+PaginaWeb -> Usuario: Muestra confirmación de reserva
+
+deactivate PaginaWeb
+
+@enduml

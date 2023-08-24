@@ -1,3 +1,5 @@
+@startuml Diagrama de clases PowerAPP
+
 class Usuario {
   - nombre
   - correoElectronico
@@ -6,11 +8,9 @@ class Usuario {
   + registrarse()
 }
 
-class Tipo_de_entrenamientos {
-    - Pesas
-    - Funcional
-    - Pilates
-    - Crossfit
+class TipoEntrenamiento {
+  - nombre
+  + obtenerNombre()
 }
 
 class ClaseFitness {
@@ -38,7 +38,9 @@ class Reserva {
   + confirmarReserva()
 }
 
+TipoEntrenamiento "1" -- "n" ClaseFitness : se relaciona con
 Usuario "1" -- "n" Reserva : realiza
 ClaseFitness "1" -- "n" Reserva : tiene
-Gimnasio "1..*" -- "n" Tipo_de_entrenamientos : ofrece
-Tipo_de_entrenamientos "1..*" -- "n" ClaseFitness : tipos
+Gimnasio "1" -- "n" ClaseFitness : ofrece
+
+@enduml
