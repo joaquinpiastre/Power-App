@@ -6,22 +6,24 @@ participant "Sistema" as Sistema
 participant "ClaseFitness" as Clase
 participant "Gimnasio" as Gimnasio
 participant "Reserva" as Reserva
+participant "TipoEntrenamiento" as TipoEntrenamiento
 
 Usuario -> PaginaWeb: Accede a la página
 Usuario -> PaginaWeb: Inicia sesión
 
 activate PaginaWeb
-PaginaWeb -> Sistema: Solicita ver horarios
+PaginaWeb -> Sistema: Solicita ver tipos de entrenamiento
 
 activate Sistema
-Sistema -> Gimnasio: Consulta horarios
-activate Gimnasio
-Gimnasio -> Sistema: Devuelve horarios
-deactivate Gimnasio
-Sistema -> PaginaWeb: Muestra horarios
+Sistema -> TipoEntrenamiento: Consulta tipos de entrenamiento
+activate TipoEntrenamiento
+TipoEntrenamiento -> Sistema: Devuelve tipos de entrenamiento
+deactivate TipoEntrenamiento
+Sistema -> PaginaWeb: Muestra tipos de entrenamiento
 deactivate Sistema
-PaginaWeb -> Usuario: Muestra horarios
+PaginaWeb -> Usuario: Muestra tipos de entrenamiento
 
+Usuario -> PaginaWeb: Selecciona tipo de entrenamiento
 Usuario -> PaginaWeb: Selecciona clase y horario
 Usuario -> PaginaWeb: Confirma reserva
 
