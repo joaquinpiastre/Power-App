@@ -3,74 +3,56 @@ from sqlalchemy import Column, Integer, String, ForeignKey, DateTime
 from sqlalchemy.orm import relationship
 from datetime import datetime
 
-class User(db.Model):
-    __tablename__ = 'user'
-    id = db.Column(db.Integer, primary_key=True)
-    _name = db.Column(db.String(120), unique=True)
-    _email = db.Column(db.String(120), unique=True)
-    _password = db.Column(db.String(120))
-    reservations = relationship('Reservation', back_populates='user')
-
-    @property
-    def name(self):
-        return self._name
+class Reserve(db.Model):
+    __tablename__ = 'reserve'
+    __user = db.Column(db.Integer, unique=True)
+    __class = db.Column(db.Integer, ForeignKey('fitnessClass.name'))
+    __date = db.Column(db.DateTime, default=datetime.utcnow)
+    __schedule = db.Column(db.DateTime, default=datetime.utcnow)
     
-    @name.setter
-    def name(self, name):
-        self._name = name
-
     @property
-    def email(self):
-        return self._email
+    def user(self) -> int:
+        return self.__user
     
-    @email.setter
-    def email(self, email):
-        self._email = email
-
+    @user.setter
+    def user(self, user) -> int:
+        self.__user = user
+        
     @property
-    def password(self):
-        return self._password
+    def __class(self) -> str:
+        return self.__class
     
-    @password.setter
-    def password(self, password):
-        self._password = password
-
-    def __repr__(self):
-        return f'User: [ID: {self.id}, Name: {self.name}, Email: {self.email}, Password: {self.password}]'
-
-class Schedule(db.Model):
-    __tablename__ = 'schedule'
-    id = db.Column(db.Integer, primary_key=True)
-    _time = db.Column(db.String(10), nullable=False, unique=True)
-    reservations = relationship('Reservation', back_populates='schedule')
-
+    @__class.setter
+    def __class(self, __class) -> str:
+        self.__class = __class
+        
     @property
-    def time(self):
-        return self._time
+    def date(self) -> str:
+        return self.__date
     
-    @time.setter
-    def time(self, time):
-        self._time = time
+    @date.setter
+    def date(self, date) -> str:
+        self.__date = date
+    
+    @property
+    def schedule(self) -> str:
+        return self.__schedule
 
-    def __repr__(self):
-        return f'Schedule: [ID: {self.id}, Time: {self.time}]'
-
-class Reservation(db.Model):
-    __tablename__ = 'reservation'
-    id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, ForeignKey('user.id'))
-    schedule_id = db.Column(db.Integer, ForeignKey('schedule.id'))
-    date = db.Column(db.DateTime, default=datetime.utcnow)
-    user = relationship('User', back_populates='reservations')
-    schedule = relationship('Schedule', back_populates='reservations')
-
-    def __repr__(self):
-        return f'Reservation: [ID: {self.id}, User: {self.user.name}, Schedule: {self.schedule.time}, Date: {self.date}]'
-
-    def serialize(self):
+    @schedule.setter
+    def schedule(self, schedule) -> str:
+        self.__schedule = schedule
+    
+    def __repr__(self) -> str:
+        return f'Reserve: [user: {self.user}, class: {self.__class}, date: {self.date}, schedule: {self.schedule}]'
+    
+    def __eq__(self, o: object) -> bool:
+        return self.user == o.user and self.__class == o.__class and self.date == o.date and self.schedule == o.schedule
+    
+    def serialize(self) -> dict:
         return {
-            'id': self.id,
-            'user': self.user.name,
-            'schedule': self.schedule.time,
-            'date': self.date.strftime('%Y-%m-%d %H:%M:%S')
+            'user': self.user,
+            'class': self.__class,
+            'date': self.date,
+            'schedule': self.schedule
         }
+        
