@@ -8,12 +8,12 @@ class User {
   + register()
 }
 
-class TrainingType {
+class trainingType {
   - name
   + getName()
 }
 
-class FitnessClass {
+class fitnessClass {
   - name
   - instructor
   - schedule
@@ -38,9 +38,9 @@ class Reserve {
   + confirmReserv()
 }
 
-TrainingType "1" -- "n" FitnessClass : relates with
+trainingType "1" -- "n" fitnessClass : relates with
 User "1" -- "n" Reserve : realizes
-FitnessClass "1" -- "n" Reserve : has
-Gym "1" -- "n" FitnessClass : offers
+fitnessClass "1" -- "n" Reserve : has
+Gym "1" -- "n" fitnessClass : offers
 
 @enduml

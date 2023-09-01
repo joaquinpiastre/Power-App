@@ -2,12 +2,11 @@ from app import db
 from sqlalchemy import Column, Integer, String, Float, ForeignKey
 from sqlalchemy.orm import relationship
 
-class fitnessClass(db.Model):
-    __tablename__ = 'user'
-    __name = db.Column(db.Integer, primary_key=True)
-    __instructor = db.Column(db.String(120), unique=True)
-    __schedule = db.Column(db.String(120), unique=True)
-    __maxCapacity = db.Column(db.String(120))
+class gym(db.Model):
+    __tablename__ = 'gym'
+    __name = db.Column(db.String(120), primary_key=True)
+    __location = db.Column(db.String(120), unique=True)
+    __offeredClasses = db.Column(db.String(120), unique=True)
 
     @property
     def name(self) -> int:
@@ -16,42 +15,34 @@ class fitnessClass(db.Model):
     @name.setter
     def name(self, name) -> int:
         self.__name = name
-
-    @property
-    def instructor(self) -> str:
-        return self.__instructor
-    
-    @instructor.setter
-    def instructor(self, instructor) -> str:
-        self.__instructor = instructor
         
     @property
-    def schedule(self) -> str:
-        return self.__schedule
+    def location(self) -> str:
+        return self.__location
     
-    @schedule
-    def schedule(self, schedule) -> str:
-        self.__schedule = schedule
-    
+    @location.setter
+    def location(self, location) -> str:
+        self.__location = location
+        
     @property
-    def maxCapacity(self) -> str:
-        return self.__maxCapacity
+    def offeredClasses(self) -> str:
+        return self.__offeredClasses
     
-    @maxCapacity.setter
-    def maxCapacity(self, maxCapacity) -> str:
-        self.__maxCapacity = maxCapacity
-
+    @offeredClasses.setter
+    def offeredClasses(self, offeredClasses) -> str:
+        self.__offeredClasses = offeredClasses
+        
     def __repr__(self) -> str:
-        return f'fitnessClass: [name: {self.name}, instructor: {self.instructor}, schedule: {self.schedule} maxCapacity: {self.maxCapacity}]'
-
+        return f'Gym: [Name: {self.name}, Location: {self.location}, Offered Classes: {self.offeredClasses}]'
+    
     def __eq__(self, o: object) -> bool:
-        return self.name == o.name and self.instructor == o.instructor and self.schedule == o.schedule and self.maxCapacity == o.maxCapacity
+        return self.name == o.name and self.location == o.location and self.offeredClasses == o.offeredClasses
+
 
     def serialize(self) -> dict:
         return {
             'name': self.name,
-            'instructor': self.instructor,
-            'schedule': self.schedule,
-            'maxCapacity': self.maxCapacity
+            'location': self.location,
+            'offeredClasses': self.offeredClasses
         }
     

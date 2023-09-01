@@ -1,24 +1,33 @@
-from flask_cors import CORS
-from flask_migrate import Migrate
-import os
-from dotenv import load_dotenv
 from flask import Flask
+from flask_marshmallow import Marshmallow
 from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
 
+from app.config import config
+import os
+
+ma = Marshmallow()
 db = SQLAlchemy()
+migrate = Migrate()
+
 
 def create_app():
+    config_name = os.getenv('FLASK_ENV')
     app = Flask(__name__)
-    CORS(app)
+      
+    f = config.factory(config_name if config_name else 'development')
+    app.config.from_object(f)
     
-    load_dotenv()
-    
-    print(os.environ("USER_DB"))
-    
-    app.config['SQLALCHEMY_DATABASE_URI'] = os.environ("USER_DB")
-    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-    
+    ma.init_app(app)
+    f.init_app(app)
     db.init_app(app)
-    
+    migrate.init_app(app, db)
 
-create_app()
+    from app.resources import home
+    app.register_blueprint(home, url_prefix='/api/v1')
+  
+    @app.shell_context_processor
+    def ctx():
+        return {"app": app, "db": db}
+    
+    return app
