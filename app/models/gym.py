@@ -1,8 +1,8 @@
-from app import db
+from app.config.database import db
 from sqlalchemy import Column, Integer, String, Float, ForeignKey
 from sqlalchemy.orm import relationship
 
-class gym(db.Model):
+class Gym(db.Model):
     __tablename__ = 'gym'
     __name = db.Column(db.String(120), primary_key=True)
     __location = db.Column(db.String(120), unique=True)

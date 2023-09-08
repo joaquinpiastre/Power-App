@@ -1,4 +1,4 @@
-from app import db
+from app.config.database import db
 from sqlalchemy import Column, Integer, String, Float, ForeignKey
 from sqlalchemy.orm import relationship
 
@@ -29,7 +29,7 @@ class User(db.Model):
     def email(self) -> str:
         return self.__email
     
-    @email
+    @email.setter
     def email(self, email) -> str:
         self.__email = email
     
@@ -54,4 +54,3 @@ class User(db.Model):
             'email': self.email,
             'password': self.password
         }
-    

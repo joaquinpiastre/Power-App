@@ -1,6 +1,7 @@
 import os
 from app import create_app
 from flask_sqlalchemy import SQLAlchemy
+from dotenv import load_dotenv
 
 app = create_app()
 app.app_context().push()

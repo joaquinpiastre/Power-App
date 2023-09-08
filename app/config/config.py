@@ -2,7 +2,7 @@ from asyncio.log import logger
 from dotenv import load_dotenv
 from pathlib import Path
 import os
-from database import FULL_URL_DB
+from app.config.database import FULL_URL_DB
 
 basedir = os.path.abspath(Path(__file__).parents[2])
 load_dotenv(os.path.join(basedir, '.env'))

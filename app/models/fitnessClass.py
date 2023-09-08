@@ -1,14 +1,14 @@
-from app import db
+from app.config.database import db
 from sqlalchemy import Column, Integer, String, Float, ForeignKey
 from sqlalchemy.orm import relationship
 from datetime import datetime
 
-class fitnessClass(db.Model):
+class FitnessClass(db.Model):
     __tablename__ = 'fitnessClass'
     __name = db.Column(db.String(80), primary_key=True)
     __instructor = db.Column(db.String(120), unique=True)
     __schedule = db.Column(db.DateTime, default=datetime.utcnow)
-    __maxCapacity = db.Column(db.Integer(120))
+    __maxCapacity = db.Column(db.Integer, unique=True)
 
     @property
     def name(self) -> int:
@@ -30,7 +30,7 @@ class fitnessClass(db.Model):
     def schedule(self) -> str:
         return self.__schedule
     
-    @schedule
+    @schedule.setter
     def schedule(self, schedule) -> str:
         self.__schedule = schedule
     

@@ -1,11 +1,11 @@
-from app import db
+from app.config.database import db
 from sqlalchemy import Column, Integer, String, ForeignKey, DateTime
 from sqlalchemy.orm import relationship
 from datetime import datetime
 
 class Reserve(db.Model):
     __tablename__ = 'reserve'
-    __user = db.Column(db.Integer, unique=True)
+    __user = db.Column(db.Integer, unique=True, primary_key=True)
     __class = db.Column(db.Integer, ForeignKey('fitnessClass.name'))
     __date = db.Column(db.DateTime, default=datetime.utcnow)
     __schedule = db.Column(db.DateTime, default=datetime.utcnow)
