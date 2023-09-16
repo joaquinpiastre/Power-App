@@ -1,15 +1,16 @@
-from app.config.database import db
-from sqlalchemy import Column, Integer, String, Float, ForeignKey
+from sqlalchemy import Column, Integer, String, Float, ForeignKeyConstraint
+from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy.orm import relationship
+from app import db
 
 class User(db.Model):
-    __tablename__ = 'user'
-    __id = db.Column(db.Integer, primary_key=True)
-    __name = db.Column(db.String(120), unique=True)
-    __email = db.Column(db.String(120), unique=True)
-    __password = db.Column(db.String(120))
+    __tablename__ = 'users'
+    __id = db.Column('id', db.Integer, primary_key=True, autoincrement=True)
+    __name = db.Column('name', db.String(120), unique=True)
+    __email = db.Column('email', db.String(120), unique=True)
+    __password = db.Column('password', db.String(120))
 
-    @property
+    @hybrid_property
     def id(self) -> int:
         return self.__id
     
@@ -17,7 +18,7 @@ class User(db.Model):
     def id(self, id) -> int:
         self.__id = id
 
-    @property
+    @hybrid_property
     def name(self) -> str:
         return self.__name
     
@@ -25,7 +26,7 @@ class User(db.Model):
     def name(self, name) -> str:
         self.__name = name
         
-    @property
+    @hybrid_property
     def email(self) -> str:
         return self.__email
     
@@ -33,7 +34,7 @@ class User(db.Model):
     def email(self, email) -> str:
         self.__email = email
     
-    @property
+    @hybrid_property
     def password(self) -> str:
         return self.__password
     

@@ -1,18 +1,15 @@
 from app.models.user import User
-from app.config.database import db
+from app import db
 
 class UserRepository():
     def __init__(self) -> None:
-        pass
+        self.__model = User
 
     def find_all(self):
-        return User.query.all()
-
-    def find_by_id(self, id):
-        return User.query.get(id)
-
-    def find_by_email(self, email):
-        return User.query.filter_by(email=email).first()
+        return db.session.query(User).all()
+    
+    def find_by_id(self, id, init) -> User:
+        return db.session.query(self.__model).filter_by(id=id).first()
 
     def create(self, user):
         db.session.add(user)

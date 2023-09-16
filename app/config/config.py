@@ -2,7 +2,6 @@ from asyncio.log import logger
 from dotenv import load_dotenv
 from pathlib import Path
 import os
-from app.config.database import FULL_URL_DB
 
 basedir = os.path.abspath(Path(__file__).parents[2])
 load_dotenv(os.path.join(basedir, '.env'))
@@ -20,7 +19,8 @@ class DevelopmentConfig(Config):
     TESTING = True
     DEBUG = True
     FLASK_ENV = 'development'
-    SQLALCHEMY_DATABASE_URI = FULL_URL_DB
+    SQLALCHEMY_TRACK_MODIFICATIONS = True
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DEV_DATABASE_URI')
         
 class ProductionConfig(Config):
     FLASK_ENV = 'production'

@@ -1,14 +1,24 @@
 from app.models import User
-from app.repositories import UserRepository
+from app.repositories.user_repository import UserRepository
+from werkzeug.security import generate_password_hash, check_password_hash
 
 class UserService():
     def __init__(self) -> None:
-        pass
-    def find_all(self):
-        list_user = []
-        user1 = User()
-        user1.name = "Santiago"
-        user1.email = "test@example.com.ar"
-        user1.password = "123456"
-        list_user.append(user1)
-        return self.__repo.find_all()
+        self.__repo = UserRepository()
+    
+    def find (self, id) -> User:
+        return self.__repo.find_by_id(id)
+
+    def create (self, entity: User) -> User:
+        return self.__repo.create(entity)
+    
+    def update (self, entity: User) -> User:
+        return self.__repo.update(entity, id)
+
+    def find_by_username (self, username: str) -> User:
+        return self.__repo.find_by_username(username)
+    
+    def check_password(self, user: User, password: str) -> bool:
+        return check_password_hash(user.password, password)
+    
+    

@@ -2,8 +2,6 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
 from flask_migrate import Migrate
-from app.models import *
-from app.config.database import db, Migrate, FULL_URL_DB
 
 from app.config import config
 import os
@@ -18,22 +16,14 @@ def create_app():
     f = config.factory(config_name if config_name else 'development')
     app.config.from_object(f)
     
-    app.config['SQLALCHEMY_DATABASE_URI'] = FULL_URL_DB
-    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-    
     ma.init_app(app)
     f.init_app(app)
     db.init_app(app)
     migrate.init_app(app, db)
 
-    from app.resources.home import home
+    from app.resources import home, user
     app.register_blueprint(home, url_prefix='/api/v1')
-    
-    from app.resources.user import user
     app.register_blueprint(user, url_prefix='/api/v1')
-    
-    with app.app_context():
-        db.create_all()
         
     @app.shell_context_processor
     def ctx():
