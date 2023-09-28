@@ -7,4 +7,4 @@ user = Blueprint('user', __name__)
 def index():
     service = UserService()
     list = service.find_all()
-    return jsonify(list), 200
+    return jsonify(list, "W"), 200

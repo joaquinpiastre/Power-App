@@ -4,11 +4,11 @@ from sqlalchemy.orm import relationship
 from app import db
 
 class User(db.Model):
-    __tablename__ = 'users'
+    __tablename__ = 'User'
     __id = db.Column('id', db.Integer, primary_key=True, autoincrement=True)
-    __name = db.Column('name', db.String(120), unique=True)
-    __email = db.Column('email', db.String(120), unique=True)
-    __password = db.Column('password', db.String(120))
+    __name = db.Column('name', db.String, unique=True)
+    __email = db.Column('email', db.String, unique=True)
+    __password = db.Column('password', db.String)
 
     @hybrid_property
     def id(self) -> int:

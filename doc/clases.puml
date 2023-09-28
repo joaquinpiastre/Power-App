@@ -1,46 +1,40 @@
-@startuml PowerAPP Class Diagram
+@startuml PowerAPP class
+
+class Platform {
+  +name: string
+  +location: string
+  +classes: List<Class>
+  +instructors: List<Instructor>
+  +users: List<User>
+  +reservations: List<Reservation>
+}
+
+class Class {
+  +name: string
+  +type: string
+  +instructor: Instructor
+  +capacity: int
+}
+
+class Instructor {
+  +name: string
+  +specialty: string
+}
+
 class User {
-  - id
-  - name
-  - email
-  - password
-  + login()
-  + register()
+  +name: string
+  +email: string
 }
 
-class trainingType {
-  - name
-  + getName()
+class Reservation {
+  +user: User
+  +class: Class
+  +date: Date
 }
 
-class fitnessClass {
-  - name
-  - instructor
-  - schedule
-  - maxCapacity
-  + getDisponibility()
-  + reserve()
-}
-
-class Gym {
-  - name
-  - location
-  - offeredClasses
-  + addClass()
-  + manageSchedule()
-}
-
-class Reserve {
-  - user: User
-  - class: FitnessClass
-  - date
-  - schedule
-  + confirmReserv()
-}
-
-trainingType "1" -- "n" fitnessClass : relates with
-User "1" -- "n" Reserve : realizes
-fitnessClass "1" -- "n" Reserve : has
-Gym "1" -- "n" fitnessClass : offers
+Platform "1" *-- "*" Class
+Platform "1" *-- "*" Instructor
+Platform "1" *-- "*" User
+Platform "1" *-- "*" Reservation
 
 @enduml

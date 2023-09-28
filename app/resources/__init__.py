@@ -1,2 +1,2 @@
-from .user import user
-from .home import home
+from .user_resource import user
+from .home_resource import home

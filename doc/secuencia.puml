@@ -1,51 +1,17 @@
-@startuml PowerAPP Sequence diagram
+@startuml PowerAPP sequence
 
 actor User
-participant "Web Page" as WebPage
-participant "System" as System
-participant "Fitness Class" as Class
-participant "Gym" as Gym
-participant "Reservation" as Reservation
-participant "Training Type" as TrainingType
 
-User -> WebPage: Accede a la página
-User -> WebPage: Inicia sesión
+User -> Platform: searchClasses()
+Platform -> Class: getAvailableClasses()
+Class -> Platform: getInstructor()
+Platform -> Instructor: getInstructorDetails()
+Instructor -> Platform: getClasses()
+Platform -> User: displayClasses()
 
-activate WebPage
-WebPage -> System: Solicita ver tipos de entrenamiento
-
-activate System
-System -> TrainingType: Consulta tipos de entrenamiento
-activate TrainingType
-TrainingType -> System: Devuelve tipos de entrenamiento
-deactivate TrainingType
-System -> WebPage: Muestra tipos de entrenamiento
-deactivate System
-WebPage -> User: Muestra tipos de entrenamiento
-
-User -> WebPage: Selecciona tipo de entrenamiento
-User -> WebPage: Selecciona clase y horario
-User -> WebPage: Confirma reserva
-
-activate WebPage
-WebPage -> System: Solicita reserva de clase
-activate System
-System -> Gym: Consulta horarios
-activate Gym
-Gym -> System: Devuelve horarios
-deactivate Gym
-System -> Class: Verifica disponibilidad
-activate Class
-Class -> System: Clase disponible
-deactivate Class
-System -> Reservation: Crea reserva
-activate Reservation
-Reservation -> System: Confirmación de reserva
-deactivate Reservation
-System -> WebPage: Reserva confirmada
-deactivate System
-WebPage -> User: Muestra confirmación de reserva
-
-deactivate WebPage
+User -> Platform: makeReservation(classId, userId)
+Platform -> Class: getClassDetails(classId)
+Class -> Platform: checkAvailability(classId)
+Platform -> User: displayReservationConfirmation()
 
 @enduml

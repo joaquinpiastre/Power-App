@@ -4,7 +4,7 @@ from app import db
 class Create(ABC):
     
     @abstractmethod
-    def create(self, obj):
+    def create(self, entity: db.Model):
         pass
     
 class Read(ABC):
@@ -14,7 +14,7 @@ class Read(ABC):
         pass
     
     @abstractmethod
-    def find_by_id(self, id):
+    def find_by_id(self, id: int):
         pass
     
 class Update(ABC):
