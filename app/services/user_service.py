@@ -1,7 +1,7 @@
 from app.models import User
 from app.repositories.user_repository import UserRepository
 from app.services.security_service import SecurityService
-from werkzeug.security import generate_password_hash, check_password_hash
+from werkzeug.security import check_password_hash
 
 class UserService():
     def __init__(self) -> None:
@@ -14,7 +14,7 @@ class UserService():
         return self.__repo.find_all()
 
     def create (self, entity: User) -> User:
-        entity_password = SecurityService.generate_password(entity.password)
+        entity_password = SecurityService.generate_password_hash(entity.password)
         return self.__repo.create(entity)
     
     def update (self, entity: User) -> User:
