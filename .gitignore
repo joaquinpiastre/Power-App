@@ -160,8 +160,9 @@ dmypy.json
 # Cython debug symbols
 cython_debug/
 
-
+# other things
 powerapp.py
+__pycache__/
 
 # PyCharm
 #  JetBrains specific template is maintained in a separate JetBrains.gitignore that can
