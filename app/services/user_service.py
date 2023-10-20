@@ -2,12 +2,16 @@ from app.models import User
 from app.repositories.user_repository import UserRepository
 from app.services.security_service import SecurityService
 from app.services.email_service import EmailService
-from app.services.validate_country import ValidateCountry
+from app.services.user_balance import UserBalance
+from app.services.command import TareaCommand
 from werkzeug.security import check_password_hash
 
-class UserService():
+class UserService(TareaCommand):
     def __init__(self) -> None:
         self.__repo = UserRepository()
+        
+    def execute(self, model):
+        self.register(model.name, model.email, model.password)
     
     def find (self, id) -> User:
         return self.__repo.find_by_id(id)
@@ -16,19 +20,20 @@ class UserService():
         return self.__repo.find_all()
 
     def register(self, name, email, password):
-        validateCountry = ValidateCountry("Argentina")
-        validateCountry.validate_country()
+        self.user_balance()
         self.create_user(name, email, password)
         emailService = EmailService()
         emailService.send_email(email, "Bienvenido a nuestra plataforma")
-        #TODO: Registrar en el log
-                
+
     def create (self, entity: User) -> User:
         entity_password = SecurityService.generate_password_hash(entity_password)
         return self.__repo.create(entity)
     
     def update (self, entity: User) -> User:
         return self.__repo.update(entity, id)
+    
+    def delete (self, id) -> bool:
+        return self.__repo.delete(id)
 
     def find_by_username (self, username: str) -> User:
         return self.__repo.find_by_username(username)
@@ -42,3 +47,8 @@ class UserService():
         except User.DoesNotExist:
             return False
         return self.check_password(user, password)
+    
+    def user_balance(self, country):
+        userBalance = UserBalance()
+        userBalance.execute(country)
+            

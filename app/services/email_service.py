@@ -6,3 +6,6 @@ class EmailService():
     
     def send_email(self, email, message):
         print(f"{message} for email: {email}")
+    
+    def execute(self, model):
+        self.model = model
