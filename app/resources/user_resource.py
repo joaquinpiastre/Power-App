@@ -11,7 +11,7 @@ user = Blueprint('user', __name__)
 def index():
     service = UserService()
     list = service.find_all()
-    return jsonify(list, "W"), 200
+    return {"users": UserSchema.dump(service.find_all())}, 200
 
 """
 id: int ingresado por el usuario
