@@ -1,4 +1,4 @@
-from flask import jsonify, Blueprint
+from flask import jsonify, Blueprint, request
 from app.services.user_service import UserService
 from app.mapping.response_schema import ResponseSchema
 from app.mapping.user_schema import UserSchema
@@ -27,23 +27,26 @@ def find(id):
         .add_data(UserSchema().dump(service.find(id)))
     return ResponseSchema().dump(response_builder.build()), 200
 
-#insert method
-@user.route('/user', methods=['POST'])
-def insert():
+#create method
+@user.route('/add_user', methods=['POST'])
+def create():
     service = UserService()
-    service.insert()
-    return {"message": "Usuario insertado"}, 200
+    user = user_schema.load(request.json)
+    service.create(user)
+    return {"message": "Usuario creado"}, 200
 
 #delete method
-@user.route('/user/<int:id>', methods=['DELETE'])
+@user.route('/delete_user/<int:id>', methods=['DELETE'])
 def delete(id):
     service = UserService()
+    id = user_schema.load(request.json)
     service.delete(id)
     return {"message": "Usuario eliminado"}, 200
 
 #update method
-@user.route('/user/<int:id>', methods=['PUT'])
-def update(id):
+@user.route('/update_user/<int:id>', methods=['PUT'])
+def update(user):
     service = UserService()
-    service.update(id)
+    user = user_schema.load(request.json)
+    service.update(user)
     return {"message": "Usuario actualizado"}, 200
