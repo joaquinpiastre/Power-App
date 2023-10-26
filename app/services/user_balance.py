@@ -1,5 +1,4 @@
 from app.services.command import TareaCommand
-import requests
 
 class UserBalance(TareaCommand):
     

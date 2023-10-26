@@ -1,15 +1,15 @@
-from app.models.class_model import ClassModel
+from app.models.classes import Classes
 from app import db
 
 class ClassesService:
     def find_all(self):
-        return ClassModel.query.all()
+        return Classes.query.all()
 
     def find(self, id):
-        return ClassModel.query.get(id)
+        return Classes.query.get(id)
 
     def create(self, class_data):
-        new_class = ClassModel(
+        new_class = Classes(
             name=class_data['name'],
             description=class_data['description'],
             start_time=class_data['start_time'],
@@ -21,7 +21,7 @@ class ClassesService:
         return new_class
 
     def update(self, id, class_data):
-        class_to_update = ClassModel.query.get(id)
+        class_to_update = Classes.query.get(id)
         class_to_update.name = class_data['name']
         class_to_update.description = class_data['description']
         class_to_update.start_time = class_data['start_time']
@@ -31,6 +31,6 @@ class ClassesService:
         return class_to_update
 
     def delete(self, id):
-        class_to_delete = ClassModel.query.get(id)
+        class_to_delete = Classes.query.get(id)
         db.session.delete(class_to_delete)
         db.session.commit()

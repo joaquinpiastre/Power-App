@@ -2,7 +2,7 @@ from flask import jsonify, Blueprint, request
 from app.services.classes_service import ClassesService
 from app.mapping.response_schema import ResponseSchema
 from app.mapping.classes_schema import ClassesSchema
-from app.models.response_message import ResponseBuilder
+from app.models.responseMessage import ResponseBuilder
 
 classes = Blueprint('classes', __name__)
 class_schema = ClassesSchema()

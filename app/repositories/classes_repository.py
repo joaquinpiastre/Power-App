@@ -1,13 +1,13 @@
-from app.models.class_model import ClassModel
+from app.models.classes import Classes
 from app.repositories.repository_base import Create, Read, Update, Delete
 from app import db
 
 class ClassRepository(Create, Read, Update, Delete):
     def __init__(self) -> None:
-        self.__model = ClassModel
+        self.__model = Classes
 
-    def create(self, class_data: ClassModel) -> db.Model:
-        new_class = ClassModel(
+    def create(self, class_data: Classes) -> db.Model:
+        new_class = Classes(
             name=class_data.name,
             description=class_data.description,
             start_time=class_data.start_time,
@@ -22,12 +22,12 @@ class ClassRepository(Create, Read, Update, Delete):
         pass
     
     def find_all(self):
-        return db.session.query(ClassModel).all()
+        return db.session.query(Classes).all()
     
-    def find_by_id(self, id, init) -> ClassModel:
+    def find_by_id(self, id, init) -> Classes:
         return db.session.query(self.__model).filter_by(id=id).first()
 
-    def update(self, class_data: ClassModel, id: int) -> ClassModel:
+    def update(self, class_data: Classes, id: int) -> Classes:
         entity = self.find_by_id(id)
         entity.name = class_data.name
         entity.description = class_data.description
