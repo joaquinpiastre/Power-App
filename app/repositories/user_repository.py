@@ -7,7 +7,6 @@ class UserRepository(Create, Read, Update, Delete):
         self.__model = User
 
     def create(self, user: User) -> db.Model:
-        #entity = user (username=user("username"))
         db.session.add(user)
         db.session.commit()
         return user
@@ -18,7 +17,7 @@ class UserRepository(Create, Read, Update, Delete):
     def find_all(self):
         return db.session.query(User).all()
     
-    def find_by_id(self, id, init) -> User:
+    def find_by_id(self, id) -> User:
         return db.session.query(self.__model).filter_by(id=id).first()
 
     def update(self, user: User, id: int) -> User:

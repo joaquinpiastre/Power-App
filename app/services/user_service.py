@@ -21,19 +21,19 @@ class UserService(TareaCommand):
 
     def register(self, name, email, password):
         self.user_balance()
-        self.create_user(name, email, password)
+        self.create(name, email, password)
         emailService = EmailService()
         emailService.send_email(email, "Bienvenido a nuestra plataforma")
 
-    def create (self, entity: User) -> User:
-        entity_password = SecurityService.generate_password_hash(entity_password)
-        return self.__repo.create(entity)
+    def create(self, entity: User) -> User:
+        entity.password = SecurityService.generate_hash(entity.password)
+        return UserRepository().create(entity)
     
     def update (self, entity: User) -> User:
         return self.__repo.update(entity, id)
     
-    def delete (self, id) -> bool:
-        return self.__repo.delete(id)
+    def delete (self, entity: User) -> bool:
+        return self.__repo.delete(entity)
 
     def find_by_username (self, username: str) -> User:
         return self.__repo.find_by_username(username)
