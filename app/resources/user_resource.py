@@ -17,8 +17,8 @@ def index():
 id: int ingresado por el usuario
 return: json con los datos del usuario
 """
-
-@user.route('/user/<int:id>', methods=['GET'])
+#find
+@user.route('/find_user/<int:id>', methods=['GET'])
 def find(id):
     service = UserService()
     response_builder = ResponseBuilder()
@@ -27,7 +27,7 @@ def find(id):
         .add_data(UserSchema().dump(service.find(id)))
     return ResponseSchema().dump(response_builder.build()), 200
 
-#create method
+#create
 @user.route('/add_user', methods=['POST'])
 def create():
     service = UserService()
@@ -35,15 +35,14 @@ def create():
     service.create(user)
     return {"message": "Usuario creado"}, 200
 
-#delete method
+#delete
 @user.route('/delete_user/<int:id>', methods=['DELETE'])
 def delete(id):
     service = UserService()
-    id = user_schema.load(request.json)
     service.delete(id)
     return {"message": "Usuario eliminado"}, 200
 
-#update method
+#update
 @user.route('/update_user/<int:id>', methods=['PUT'])
 def update(user):
     service = UserService()
