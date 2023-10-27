@@ -44,8 +44,8 @@ def delete(id):
 
 #update
 @user.route('/update_user/<int:id>', methods=['PUT'])
-def update(user):
+def update(id):
     service = UserService()
-    user = user_schema.load(request.json)
-    service.update(user)
+    id = user_schema.load(request.json)
+    service.update(id)
     return {"message": "Usuario actualizado"}, 200

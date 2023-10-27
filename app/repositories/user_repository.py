@@ -20,7 +20,8 @@ class UserRepository(Create, Read, Update, Delete):
     def find_by_id(self, id) -> User:
         return db.session.query(self.__model).filter_by(id=id).first()
 
-    def update(self, user: User, id: int) -> User:
+    def update(self, id: int) -> User:
+        user = User
         entity = self.find_by_id(id)
         entity.name = user.name
         entity.email = user.email

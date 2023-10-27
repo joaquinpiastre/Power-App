@@ -163,6 +163,8 @@ cython_debug/
 # other things
 powerapp.py
 __pycache__/
+PRACTICA
+
 
 # PyCharm
 #  JetBrains specific template is maintained in a separate JetBrains.gitignore that can
