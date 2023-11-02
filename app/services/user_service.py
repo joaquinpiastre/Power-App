@@ -29,8 +29,8 @@ class UserService(TareaCommand):
         entity.password = SecurityService.generate_hash(entity.password)
         return UserRepository().create(entity)
     
-    def update (self, entity: User) -> User:
-        return self.__repo.update(entity, id)
+    def update (self, id: int, entity: User) -> User:
+        return self.__repo.update(id, entity)
     
     def delete (self, entity: User) -> bool:
         return self.__repo.delete(entity)
