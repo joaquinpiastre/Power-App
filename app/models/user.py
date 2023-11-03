@@ -1,14 +1,18 @@
 from sqlalchemy import Column, Integer, String, Float, ForeignKeyConstraint
 from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy.orm import relationship
+from dataclasses import dataclass
 from app import db
 
+@dataclass
 class User(db.Model):
     __tablename__ = 'User'
     __id = db.Column('id', db.Integer, primary_key=True, autoincrement=True)
     __name = db.Column('name', db.String, unique=True)
     __email = db.Column('email', db.String, unique=True)
     __password = db.Column('password', db.String)
+    roles = db.relationship("Role", secondary='user_roles', back_populates="users")
+    
 
     @hybrid_property
     def id(self) -> int:
@@ -41,6 +45,14 @@ class User(db.Model):
     @password.setter
     def password(self, password) -> str:
         self.__password = password
+        
+    @hybrid_property
+    def roles(self) -> str:
+        return self.__roles
+    
+    @roles.setter
+    def roles(self, roles) -> str:
+        self.__roles = roles
 
     def __repr__(self) -> str:
         return f'User: [ID: {self.id}, Name: {self.name}, Email: {self.email} Password: {self.password}]'
