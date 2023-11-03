@@ -5,10 +5,19 @@ from app import db
 
 class Classes(db.Model):
     __tablename__ = 'Classes'
-    __name = db.Column('name', db.String, primary_key=True)
+    __id = db.Column('id', db.Integer, primary_key=True, autoincrement=True)
+    __name = db.Column('name', db.String)
     __instructor = db.Column('instructor', db.String)
     __type = db.Column('type', db.String)
     __capacity = db.Column('capacity', db.Integer)
+
+    @hybrid_property
+    def id(self) -> int:
+        return self.__id
+    
+    @id.setter
+    def id(self, id) -> int:
+        self.__id = id
 
     @hybrid_property
     def name(self) -> int:
@@ -43,13 +52,14 @@ class Classes(db.Model):
         self.__capacity = capacity
 
     def __repr__(self) -> str:
-        return f'Classes: [name: {self.name}, instructor: {self.instructor}, type: {self.type} capacity: {self.capacity}]'
+        return f'Classes: [ID: {self.id}, Name: {self.name}, Instructor: {self.instructor}, Type: {self.type}, Capacity: {self.capacity}]'
 
     def __eq__(self, o: object) -> bool:
-        return self.name == o.name and self.instructor == o.instructor and self.type == o.type and self.capacity == o.capacity
+        return self.id == o.id and self.name == o.name and self.instructor == o.instructor and self.type == o.type and self.capacity == o.capacity
 
     def serialize(self) -> dict:
         return {
+            'id': self.id,
             'name': self.name,
             'instructor': self.instructor,
             'type': self.type,
