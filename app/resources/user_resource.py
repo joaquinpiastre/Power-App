@@ -7,6 +7,8 @@ from app.models.responseMessage import ResponseBuilder
 user = Blueprint('user', __name__)
 user_schema = UserSchema()
 
+# @role.route('/add_role', methods=['POST'])
+
 # find all
 @user.route('/find_all_users', methods=['GET'])
 def index():

@@ -11,6 +11,7 @@ user_schema = UserSchema()
 @auth.route('/register', methods=['POST'])
 def register_user():
     name = request.json.get("name", None)
+    email = request.json.get("email", None)
     password = request.json.get("password", None)
     service = UserService()
 
@@ -28,7 +29,7 @@ def login():
     
     if service.check_auth(name,password):
         user = service.find_by_name(name)
-        list_roles = [role.name for role in user.roles] #TODO: PROBLEMA
+        list_roles = [role.name for role in user.roles]
         
         access_token = create_access_token(user_schema.dump(user), additional_claims={"roles": list_roles})
         return jsonify[{"token": access_token, "id": user.id}]

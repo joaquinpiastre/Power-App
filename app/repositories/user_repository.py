@@ -18,10 +18,10 @@ class UserRepository(Create, Read, Update, Delete):
         return db.session.query(User).all()
     
     def find_by_id(self, id) -> User:
-        return db.session.query(self.__model).filter_by(id=id).first()
+        return db.session.query(self.__model).filter(self.__model.id == id).one_or_none()
     
     def find_by_name(self, name) -> User:
-        return db.session.query(self.__model).filter_by(name=name).first()
+        return db.session.query(self.__model).filter(self.__model.name == name).one_or_none()
 
     def update(self, id: int, new_data: dict) -> User:
         user = self.find_by_id(id)
