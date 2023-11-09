@@ -9,7 +9,7 @@ class Platform {
   +reservations: List<Reservation>
 }
 
-class Class {
+class Classes {
   +name: string
   +type: string
   +instructor: Instructor

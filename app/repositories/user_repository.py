@@ -5,7 +5,7 @@ from app import db
 class UserRepository(Create, Read, Update, Delete):
     def __init__(self) -> None:
         self.__model = User
-
+    
     def create(self, user: User) -> db.Model:
         db.session.add(user)
         db.session.commit()
@@ -19,6 +19,9 @@ class UserRepository(Create, Read, Update, Delete):
     
     def find_by_id(self, id) -> User:
         return db.session.query(self.__model).filter_by(id=id).first()
+    
+    def find_by_name(self, name) -> User:
+        return db.session.query(self.__model).filter_by(name=name).first()
 
     def update(self, id: int, new_data: dict) -> User:
         user = self.find_by_id(id)

@@ -11,9 +11,9 @@ class User(db.Model):
     __name = db.Column('name', db.String, unique=True)
     __email = db.Column('email', db.String, unique=True)
     __password = db.Column('password', db.String)
-    roles = db.relationship("Role", secondary='user_roles', back_populates="users")
     
-
+    roles = db.relationship("role", secondary='user_roles', back_populates="users")
+    
     @hybrid_property
     def id(self) -> int:
         return self.__id
@@ -55,7 +55,7 @@ class User(db.Model):
         self.__roles = roles
 
     def __repr__(self) -> str:
-        return f'User: [ID: {self.id}, Name: {self.name}, Email: {self.email} Password: {self.password}]'
+        return f'User: [ID: {self.id}, Name: {self.name}, Email: {self.email}, Password: {self.password}], Roles: {self.roles}'
 
     def __eq__(self, o: object) -> bool:
         return self.id == o.id and self.name == o.name and self.email == o.email and self.password == o.password
