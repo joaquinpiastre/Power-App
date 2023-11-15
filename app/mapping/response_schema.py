@@ -1,4 +1,4 @@
-from app.models import responseMessage
+from app.models import response_message
 from marshmallow import validate, Schema, fields
 
 class ResponseSchema(Schema):

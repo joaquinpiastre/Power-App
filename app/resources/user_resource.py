@@ -2,12 +2,10 @@ from flask import jsonify, Blueprint, request
 from app.services.user_service import UserService
 from app.mapping.response_schema import ResponseSchema
 from app.mapping.user_schema import UserSchema
-from app.models.responseMessage import ResponseBuilder
+from app.models.response_message import ResponseBuilder
 
 user = Blueprint('user', __name__)
 user_schema = UserSchema()
-
-# @role.route('/add_role', methods=['POST'])
 
 # find all
 @user.route('/find_all_users', methods=['GET'])
@@ -31,7 +29,7 @@ def find(id):
     return ResponseSchema().dump(response_builder.build()), 200
 
 #create
-@user.route('/add_user', methods=['POST'])
+@user.route('/add', methods=['POST'])
 def create():
     service = UserService()
     user = user_schema.load(request.json)
@@ -39,14 +37,14 @@ def create():
     return {"message": "Usuario creado"}, 200
 
 #delete
-@user.route('/delete_user/<int:id>', methods=['DELETE'])
+@user.route('/delete/<int:id>', methods=['DELETE'])
 def delete(id):
     service = UserService()
     service.delete(id)
     return {"message": "Usuario eliminado"}, 200
 
 #update
-@user.route('/update_user/<int:id>', methods=['PUT'])
+@user.route('/update/<int:id>', methods=['PUT'])
 def update(id):
     service = UserService()
     user_data = request.json

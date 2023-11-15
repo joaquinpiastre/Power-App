@@ -4,7 +4,7 @@ from .relations import user_roles
 
 @dataclass
 class Role(db.Model):
-    __tablename__ = "role"
+    __tablename__ = "roles"
     id = db.Column('id', db.Integer, primary_key=True, autoincrement=True)
     name = db.Column('name', db.String(50), nullable=False)
     description = db.Column('description', db.String(120), nullable=False)

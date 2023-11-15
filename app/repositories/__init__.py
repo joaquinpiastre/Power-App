@@ -1,1 +1,2 @@
 from .user_repository import UserRepository
+from .gym_class_repository import GymClassRepository

@@ -21,12 +21,12 @@ def create_app():
     db.init_app(app)
     migrate.init_app(app, db)
 
-    from app.resources import home, user, classes
+    from app.resources import home, user, gym_class
     from app.resources.auth import auth
-    app.register_blueprint(home, url_prefix='/api/v1')
-    app.register_blueprint(user, url_prefix='/api/v1')
-    app.register_blueprint(classes, url_prefix='/api/v1')
-    app.register_blueprint(auth, url_prefix='/api/v1')
+    app.register_blueprint(home, url_prefix='/home')
+    app.register_blueprint(user, url_prefix='/user')
+    app.register_blueprint(gym_class, url_prefix='/gym_class')
+    app.register_blueprint(auth, url_prefix='/auth')
     
         
     @app.shell_context_processor

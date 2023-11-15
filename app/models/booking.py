@@ -6,8 +6,8 @@ from app import db
 from dataclasses import dataclass
 
 @dataclass
-class Reservation(db.Model):
-    __tablename__ = 'Reservation'
+class Booking(db.Model):
+    __tablename__ = 'bookings'
     user = db.Column('user', db.Integer, unique=True, primary_key=True)
     clazz = db.Column('class', db.Integer)
     date = db.Column('date', db.DateTime)

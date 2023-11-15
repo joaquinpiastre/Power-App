@@ -6,6 +6,6 @@ from dataclasses import dataclass
 
 @dataclass
 class Instructor(db.Model):
-    __tablename__ = 'Instructor'
+    __tablename__ = 'instructors'
     name = db.Column('name', db.String, primary_key=True)
     specialty = db.Column('specialty', db.String)

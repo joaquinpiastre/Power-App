@@ -1,13 +1,13 @@
-from app.models.classes import Classes
+from app.models.gym_class import GymClass
 from app.repositories.repository_base import Create, Read, Update, Delete
 from app import db
 
-class ClassRepository(Create, Read, Update, Delete):
+class GymClassRepository(Create, Read, Update, Delete):
     def __init__(self) -> None:
-        self.__model = Classes
+        self.__model = GymClass
 
-    def create(self, class_data: Classes) -> db.Model:
-        new_class = Classes(
+    def create(self, class_data: GymClass) -> db.Model:
+        new_class = GymClass(
             name=class_data['name'],
             instructor=class_data['instructor'],
             type=class_data['type'],
@@ -23,10 +23,10 @@ class ClassRepository(Create, Read, Update, Delete):
     def find_all(self):
         return db.session.query(self.__model).all()
         
-    def find_by_id(self, id) -> Classes:
+    def find_by_id(self, id) -> GymClass:
         return db.session.query(self.__model).filter_by(id=id).first()
 
-    def update(self, class_data: dict, id: int) -> Classes:
+    def update(self, class_data: dict, id: int) -> GymClass:
         entity = self.find_by_id(id)
         entity.instructor = class_data['instructor']
         entity.type = class_data['type']

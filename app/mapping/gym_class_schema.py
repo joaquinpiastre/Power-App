@@ -1,6 +1,6 @@
 from marshmallow import Schema, fields
 
-class ClassesSchema(Schema):
+class GymClassSchema(Schema):
     id = fields.Int(dump_only=True)
     name = fields.Str(required=True)
     instructor = fields.Str(required=True)
