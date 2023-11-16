@@ -8,7 +8,7 @@ gym_class = Blueprint('gym_class', __name__)
 gym_class_schema = GymClassSchema()
 
 # find all
-@gym_class.route('/find_all', methods=['GET'])
+@gym_class.route('/find_all_classes', methods=['GET'])
 def get_classes():
     service = GymClassService()
     class_data = gym_class_schema.load(request.json)
@@ -16,7 +16,7 @@ def get_classes():
     return jsonify({"Classes": classes}), 200
 
 #find by id
-@gym_class.route('/find/<int:id>', methods=['GET'])
+@gym_class.route('/find_class/<int:id>', methods=['GET'])
 def get_class(id):
     service = GymClassService()
     response_builder = ResponseBuilder()
@@ -26,7 +26,7 @@ def get_class(id):
     return ResponseSchema().dump(response_builder.build()), 200
 
 #create
-@gym_class.route('/add', methods=['POST'])
+@gym_class.route('/add_class', methods=['POST'])
 def create_class():
     service = GymClassService()
     class_data = request.get_json()
@@ -34,7 +34,7 @@ def create_class():
     return {"message": "Clase creada", "class": GymClassSchema().dump(new_class)}, 201
 
 #update
-@gym_class.route('/update/<int:id>', methods=['PUT'])
+@gym_class.route('/update_class/<int:id>', methods=['PUT'])
 def update_class(id):
     service = GymClassService()
     class_data = request.json
@@ -42,7 +42,7 @@ def update_class(id):
     return {"message": "Clase actualizada", "class": GymClassSchema().dump(updated_class)}, 200
 
 #delete
-@gym_class.route('/delete/<int:id>', methods=['DELETE'])
+@gym_class.route('/delete_class/<int:id>', methods=['DELETE'])
 def delete_class(id):
     service = GymClassService()
     service.delete(id)

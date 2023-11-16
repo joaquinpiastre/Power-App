@@ -2,7 +2,6 @@ from marshmallow import Schema, fields
 
 class GymClassSchema(Schema):
     id = fields.Int(dump_only=True)
-    name = fields.Str(required=True)
-    instructor = fields.Str(required=True)
-    type = fields.Str(required=True)
-    capacity = fields.Int(required=True)
+    gym_name = fields.Str(required=True)
+    instructors = fields.Nested('InstructorSchema', many=True, exclude=('gym_classes',))
+    type_class = fields.Str(required=True)

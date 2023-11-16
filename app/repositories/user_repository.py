@@ -11,9 +11,6 @@ class UserRepository(Create, Read, Update, Delete):
         db.session.commit()
         return user
     
-    def exist_by_id(self, id) -> bool:
-        pass
-    
     def find_all(self):
         return db.session.query(User).all()
     
@@ -22,6 +19,9 @@ class UserRepository(Create, Read, Update, Delete):
     
     def find_by_name(self, name) -> User:
         return db.session.query(self.__model).filter(self.__model.name == name).one_or_none()
+    
+    def find_by_email(self, email) -> User:
+        return db.session.query(self.__model).filter(self.__model.email == email).one_or_none()
 
     def update(self, id: int, new_data: dict) -> User:
         user = self.find_by_id(id)

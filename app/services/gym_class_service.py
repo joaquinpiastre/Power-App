@@ -3,7 +3,7 @@ from app.repositories.repository_base import Create, Read, Update, Delete
 from app.repositories.gym_class_repository import GymClassRepository
 from app import db
 
-class GymClassService:
+class GymClassService(Create, Read, Update, Delete):
     def __init__(self) -> None:
         self.__repo = GymClassRepository()
     
@@ -11,7 +11,7 @@ class GymClassService:
         return self.__repo.find_all()
 
     def find(self, id):
-        return GymClass.query.get(id)
+        return self.__repo.find_by_id(id)
 
     def create(self, class_data):
         return self.__repo.create(class_data)
