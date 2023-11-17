@@ -1,12 +1,10 @@
 from app.models import User
 from app.repositories.user_repository import UserRepository
 from app.services.security_service import SecurityService
-from app.services.email_service import EmailService
 from sqlalchemy.orm.exc import NoResultFound
-from app.services.command import TareaCommand
 from werkzeug.security import check_password_hash
 
-class UserService(TareaCommand):
+class UserService():
     def __init__(self) -> None:
         self.__repo = UserRepository()
         

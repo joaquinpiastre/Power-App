@@ -25,10 +25,13 @@ class InstructorRepository(Create, Read, Update, Delete):
 
     def update(self, id: int, new_data: dict) -> Instructor:
         instructor = self.find_by_id(id)
-        instructor.name = new_data['name']
-        instructor.email = new_data['email']
-        db.session.commit()
-        return instructor
+        if instructor:
+            instructor.name = new_data.get('name', instructor.name)
+            instructor.password = new_data.get('password', instructor.password)
+            db.session.commit()
+            return instructor
+        else:
+            raise ValueError("Instructor with id {} not found".format(id))
 
     def delete(self, id: int):
         entity = self.find_by_id(id)

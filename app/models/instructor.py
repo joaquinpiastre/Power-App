@@ -12,4 +12,4 @@ class Instructor(db.Model):
     password = db.Column('password', db.String)
     specialty = db.Column('specialty', db.String)
 
-    gym_classes = db.relationship("GymClass", back_populates="instructors")
+    roles = db.relationship("Role", secondary="instructor_roles", back_populates="instructors")

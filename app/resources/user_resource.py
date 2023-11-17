@@ -3,10 +3,14 @@ from app.services.user_service import UserService
 from app.mapping.response_schema import ResponseSchema
 from app.mapping.user_schema import UserSchema
 from app.models.response_message import ResponseBuilder
+from app.services.command import BookGymClassCommand
+from app.services.gym_class_service import GymClassService
+from app.services.booking_service import BookingService
+from app.resources.instructor_resource import GymClassServiceImpl
 
 user = Blueprint('user', __name__)
 user_schema = UserSchema()
-
+    
 # find all
 @user.route('/find_all', methods=['GET'])
 def index():
@@ -38,3 +42,12 @@ def update(id):
     user_data = request.json
     service.update(id, user_data)
     return {"message": "Usuario actualizado"}, 200
+
+@user.route('/book_class/<int:user_id>/<int:gym_class_id>', methods=['POST'])
+def book_gym_class(user_id, gym_class_id):
+    user_service = UserService()
+    gym_class_service = GymClassServiceImpl()
+    booking_service = BookingService()
+    command = BookGymClassCommand(user_service, gym_class_service, booking_service, user_id, gym_class_id)
+    command.execute()
+    return {"message": "Clase de gimnasio reservada"}, 200

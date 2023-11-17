@@ -1,27 +1,28 @@
-from app.models.gym_class import GymClass
+from app.models.booking import Booking
 from app.repositories.repository_base import Create, Read, Update, Delete
 from app import db
 
-class GymClassRepository(Create, Read, Update, Delete):
+class BookingRepository(Create, Read, Update, Delete):
     def __init__(self) -> None:
-        self.__model = GymClass
+        self.__model = Booking
     
     def find_all(self):
         return db.session.query(self.__model).all()
         
-    def find_by_id(self, id) -> GymClass:
+    def find_by_id(self, id) -> Booking:
         return db.session.query(self.__model).filter(self.__model.id == id).one_or_none()
 
-    def create(self, class_data: GymClass) -> db.Model:
-        new_class = GymClass(
-            gym_name=class_data['gym_name'],
-            instructor_id=class_data['instructor_id']
+    def create(self, booking: Booking) -> Booking:
+        new_booking = Booking(
+            user_id=booking.user_id,
+            gym_class_id=booking.gym_class_id,
+            booking_date=booking.booking_date
         )
-        db.session.add(new_class)
+        db.session.add(new_booking)
         db.session.commit()
-        return new_class
+        return new_booking
     
-    def update(self, class_data: dict, id: int) -> GymClass:
+    def update(self, class_data: dict, id: int) -> Booking:
         entity = self.find_by_id(id)
         entity.gym_name = class_data['gym_name']
         db.session.commit()
