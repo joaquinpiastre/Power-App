@@ -21,9 +21,11 @@ class InstructorService():
         entity.password = SecurityService.generate_hash(entity.password)
         return InstructorRepository().create(entity)
     
-    def update (self, id: int, entity: Instructor) -> Instructor:
+    def update (self, id: int, entity: Instructor) -> Instructor: 
+        if 'password' in entity:
+            entity['password'] = SecurityService.generate_hash(entity['password'])
         return self.__repo.update(id, entity)
-    
+
     def delete (self, entity: Instructor) -> bool:
         return self.__repo.delete(entity)
 

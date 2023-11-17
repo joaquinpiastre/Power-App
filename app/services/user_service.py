@@ -22,6 +22,8 @@ class UserService():
         return UserRepository().create(entity)
     
     def update (self, id: int, entity: User) -> User:
+        if 'password' in entity:
+            entity['password'] = SecurityService.generate_hash(entity['password'])
         return self.__repo.update(id, entity)
     
     def delete (self, entity: User) -> bool:
