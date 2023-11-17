@@ -43,7 +43,7 @@ def update(id):
     return {"message": "Usuario actualizado"}, 200
 
 # get all classes
-@user.route('/all_classes', methods=['GET'])
+@user.route('/get_classes', methods=['GET'])
 def get_all_classes():
     gym_class_service = GymClassService()
     classes = gym_class_service.find_all()
