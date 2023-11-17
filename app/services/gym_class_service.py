@@ -13,8 +13,9 @@ class GymClassService(Create, Read, Update, Delete):
     def find_by_id(self, id):
         return self.__repo.find_by_id(id)
 
-    def create(self, class_data):
-        return self.__repo.create(class_data)
+    def create(self, class_data: dict) -> GymClass:
+        gym_class = GymClass(**class_data)
+        return self.__repo.create(gym_class)
 
     def update(self, id, class_data):
         return self.__repo.update(id, class_data)

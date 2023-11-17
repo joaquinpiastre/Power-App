@@ -4,31 +4,19 @@ from app import db
 
 class BookingRepository(Create, Read, Update, Delete):
     def __init__(self) -> None:
-        self.__model = Booking
+        self.model = Booking
     
     def find_all(self, user_id):
-        return Booking.query.filter_by(user_id=user_id).all()
-        
+        return db.session.query(self.model).filter(self.model.user_id == user_id).all()    
+                    
     def find_by_id(self, id) -> Booking:
-        return db.session.query(self.__model).filter(self.__model.id == id).one_or_none()
-
+        return super().find_by_id(id)
+        
     def create(self, booking: Booking) -> Booking:
-        new_booking = Booking(
-            user_id=booking.user_id,
-            gym_class_id=booking.gym_class_id,
-            booking_date=booking.booking_date
-        )
-        db.session.add(new_booking)
-        db.session.commit()
-        return new_booking
+        return super().create(booking)
     
     def update(self, class_data: dict, id: int) -> Booking:
-        entity = self.find_by_id(id)
-        entity.gym_name = class_data['gym_name']
-        db.session.commit()
-        return entity
+        return super().update(id, **class_data)
 
     def delete(self, id: int):
-        entity = self.find_by_id(id)
-        db.session.delete(entity)
-        db.session.commit()
+        return super().delete(id)

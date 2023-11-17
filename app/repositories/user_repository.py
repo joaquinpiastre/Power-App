@@ -4,33 +4,25 @@ from app import db
 
 class UserRepository(Create, Read, Update, Delete):
     def __init__(self) -> None:
-        self.__model = User
+        self.model = User
     
-    def create(self, user: User) -> db.Model:
-        db.session.add(user)
-        db.session.commit()
-        return user
+    def create(self, entity: User) -> db.Model:
+        return super().create(entity)
     
     def find_all(self):
-        return db.session.query(User).all()
-    
+        return super().find_all()
+            
     def find_by_id(self, id) -> User:
-        return db.session.query(self.__model).filter(self.__model.id == id).one_or_none()
-    
+        return super().find_by_id(id)
+        
     def find_by_name(self, name) -> User:
-        return db.session.query(self.__model).filter(self.__model.name == name).one_or_none()
+        return db.session.query(self.model).filter(self.model.name == name).one_or_none()
     
     def find_by_email(self, email) -> User:
-        return db.session.query(self.__model).filter(self.__model.email == email).one_or_none()
+        return db.session.query(self.model).filter(self.model.email == email).one_or_none()
 
     def update(self, id: int, new_data: dict) -> User:
-        user = self.find_by_id(id)
-        user.name = new_data['name']
-        user.email = new_data['email']
-        db.session.commit()
-        return user
+        return super().update(id, **new_data)
 
     def delete(self, id: int):
-        entity = self.find_by_id(id)
-        db.session.delete(entity)
-        db.session.commit()
+        return super().delete(id)

@@ -4,30 +4,19 @@ from app import db
 
 class GymClassRepository(Create, Read, Update, Delete):
     def __init__(self) -> None:
-        self.__model = GymClass
+        self.model = GymClass
     
     def find_all(self):
-        return db.session.query(self.__model).all()
+        return super().find_all()
         
     def find_by_id(self, id) -> GymClass:
-        return db.session.query(self.__model).filter(self.__model.id == id).one_or_none()
+        return super().find_by_id(id)
 
     def create(self, class_data: GymClass) -> db.Model:
-        new_class = GymClass(
-            gym_name=class_data['gym_name'],
-            instructor_id=class_data['instructor_id']
-        )
-        db.session.add(new_class)
-        db.session.commit()
-        return new_class
+        return super().create(class_data)
     
     def update(self, class_data: dict, id: int) -> GymClass:
-        entity = self.find_by_id(id)
-        entity.gym_name = class_data['gym_name']
-        db.session.commit()
-        return entity
+        return super().update(id, **class_data)
 
     def delete(self, id: int):
-        entity = self.find_by_id(id)
-        db.session.delete(entity)
-        db.session.commit()
+        return super().delete(id)
