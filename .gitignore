@@ -164,6 +164,7 @@ cython_debug/
 powerapp.py
 __pycache__/
 PRACTICA
+migrations/versions
 
 
 # PyCharm
