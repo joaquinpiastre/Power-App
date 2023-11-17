@@ -8,3 +8,10 @@ class GymClass(db.Model):
     id = db.Column('id', db.Integer, primary_key=True, autoincrement=True)
     gym_name = db.Column('gym_name', db.String)
     instructor_id = db.Column('instructor_id', db.Integer, ForeignKey('instructors.id'))
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'gym_name': self.gym_name,
+            'instructor_id': self.instructor_id
+        }

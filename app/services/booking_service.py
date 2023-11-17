@@ -7,9 +7,9 @@ class BookingService:
 
     def find_by_id(self, id) -> Booking:
         return self.__repo.find_by_id(id)
-
-    def find_all(self) -> list[Booking]:
-        return self.__repo.find_all()
+    
+    def find_all(self, user_id):
+        return self.__repo.find_all(user_id)
 
     def add(self, entity: Booking) -> Booking:
         return self.__repo.create(entity)

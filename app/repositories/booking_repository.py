@@ -6,8 +6,8 @@ class BookingRepository(Create, Read, Update, Delete):
     def __init__(self) -> None:
         self.__model = Booking
     
-    def find_all(self):
-        return db.session.query(self.__model).all()
+    def find_all(self, user_id):
+        return Booking.query.filter_by(user_id=user_id).all()
         
     def find_by_id(self, id) -> Booking:
         return db.session.query(self.__model).filter(self.__model.id == id).one_or_none()

@@ -10,28 +10,27 @@ from app.mapping.gym_class_schema import GymClassSchema
 
 instructor = Blueprint('instructor', __name__)
 instructor_schema = InstructorSchema()
-class GymClassServiceImpl(GymClassService):
-    def find_by_id(self, id) -> Instructor:
-        return db.session.query(Instructor).filter(Instructor.id == id).one_or_none()
 
 # find all
 @instructor.route('/find_all', methods=['GET'])
 def get_instructors():
     service = InstructorService()
     response_builder = ResponseBuilder()
+    instructors = service.find_all()
     response_builder.add_message("Instructores encontrados")\
         .add_status_code(200)\
-        .add_data(InstructorSchema().dump(service.find_all()))
+        .add_data([instructor.to_dict() for instructor in instructors])
     return ResponseSchema().dump(response_builder.build()), 200
 
 #find by id
 @instructor.route('/find/<int:id>', methods=['GET'])
-def get_class(id):
+def get_instructor_by_id(id):
     service = InstructorService()
     response_builder = ResponseBuilder()
+    instructor = service.find_by_id(id)
     response_builder.add_message("Instructor encontrado")\
         .add_status_code(200)\
-        .add_data(InstructorSchema().dump(service.find_by_id(id)))
+        .add_data(instructor.to_dict() if instructor else None)
     return ResponseSchema().dump(response_builder.build()), 200
 
 #update
@@ -52,7 +51,7 @@ def delete_instructor(id):
 #create class
 @instructor.route('/create_class/<int:id>', methods=['POST'])
 def create_class(id):
-    service = GymClassServiceImpl()
+    service = GymClassService()
     class_data = request.get_json()
     class_data['instructor_id'] = id
     new_class = service.create(class_data)
@@ -61,7 +60,7 @@ def create_class(id):
 #update class
 @instructor.route('/update_class/<int:id>', methods=['PUT'])
 def update_class(id):
-    service = GymClassServiceImpl()
+    service = GymClassService()
     class_data = request.json
     updated_class = service.update(class_data, id)
     return {"message": "Clase actualizada", "class": GymClassSchema().dump(updated_class)}, 200
@@ -69,6 +68,6 @@ def update_class(id):
 #delete class
 @instructor.route('/delete_class/<int:id>', methods=['DELETE'])
 def delete_class(id):
-    service = GymClassServiceImpl()
+    service = GymClassService()
     service.delete(id)
     return {"message": "Clase eliminada"}, 200

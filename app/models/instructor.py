@@ -13,3 +13,11 @@ class Instructor(db.Model):
     specialty = db.Column('specialty', db.String)
 
     roles = db.relationship("Role", secondary="instructor_roles", back_populates="instructors")
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'name': self.name,
+            'email': self.email,
+            'specialty': self.specialty
+        }
